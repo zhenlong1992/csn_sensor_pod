@@ -10,6 +10,7 @@ public class ResponseHandler {
 		logger.trace("Start isRespFin method");
 		
 		logger.trace("Check if the response is the final line or not");
+		//匹配任意的空白符  [0-9]数字
 		if (resp.matches("\\s*[0-9]\\s*")
 				|| resp.matches("OK|CONNECT|NO CARRIER|ERROR|NO CARRIER0")
 				|| resp.equals("") || resp.contains("+CME ERROR:") || resp.contains("SRING:")) {

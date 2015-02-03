@@ -14,12 +14,13 @@ public class ModemIO {
 
 	public void openIO() {
 		logger.trace("Start connSerial method");
-		
+
 		List<String> usbPorts = new SerialConnFactory().findComPort("USB");
 		logger.debug("Select Port {}", usbPorts.get(2));
+		// baudRate값???
 		serial = new SerialConnFactory().getSerialConnection(usbPorts.get(2),
 				115200);
-		
+
 		logger.trace("End connSerial method");
 	}
 
@@ -79,14 +80,17 @@ public class ModemIO {
 			// (int) tempChar);
 
 			if (tempChar == '\r') {
+
 				logger.trace("Finish to receive the response with \\r");
 				String response = sb.toString();
+				//\D匹配任意非数字的字符  .*匹配任意文本
 				if (response.matches("\\D.*")) {
 					logger.debug("The response line \"{}\" is text data type",
 							response);
 					tempChar = serial.read();
-					// logger.trace("[Will be removed] Arrived Character: {}, ASCII Num: {}",
-					// tempChar, (int) tempChar);
+					logger.trace(
+							"[Will be removed] Arrived Character: {}, ASCII Num: {}",
+							tempChar, (int) tempChar);
 				}
 
 				logger.debug("Assembled Response: {}", response);
