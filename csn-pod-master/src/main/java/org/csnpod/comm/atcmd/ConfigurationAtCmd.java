@@ -36,6 +36,7 @@ public class ConfigurationAtCmd extends DefaultAtCmd {
 	/**
 	 * 
 	 * @return Modem의 기본 Response 코드 준수(0은 OK), -1은 Error
+	 * val   0은 numeric code 1은 vervose code
 	 */
 	public int setResponseMode(int val) {
 		logger.trace("Start setResponseMode method");
