@@ -68,7 +68,7 @@ public class ConfigLoader {
 		CsnPodConfig.adminPhoneNum = csnPodUnitNode.path("admin_cell_phone")
 				.textValue();
 
-		logger.debug("Loaded CSN Pod Config: {}", new CsnPodConfig());
+		logger.debug("Loaded CSN Pod Config: {}", new CsnPodConfig().toString());
 
 		logger.trace("End loadCsnPodConfig Method");
 	}
@@ -132,7 +132,7 @@ public class ConfigLoader {
 			}
 
 			SensorUnitConfig.physicalSnsrInfo = physicalSensorConf;
-			logger.info("Loaded Sensor Config: {}", new SensorUnitConfig());
+			logger.info("Loaded Sensor Config: {}", new SensorUnitConfig().toString());
 		}
 
 		logger.trace("End loadSensorConfig Method");
@@ -155,7 +155,7 @@ public class ConfigLoader {
 		DataStreamConfig.maxTransferCntAtOnce = dataUnitNode.path(
 				"max_transfer_cnt_at_once").intValue();
 
-		logger.info("Loaded DataStream Config: {}", new DataStreamConfig());
+		logger.info("Loaded DataStream Config: {}", new DataStreamConfig().toString());
 
 		logger.trace("End loadDataStreamConfig Method");
 	}
@@ -187,7 +187,7 @@ public class ConfigLoader {
 			CommConfig.commType = CommunicationType.WIFI;
 		}
 
-		logger.info("Loaded Communication Config: {}", new CommConfig());
+		logger.info("Loaded Communication Config: {}", new CommConfig().toString());
 
 		logger.trace("End loadCommConfig Method");
 	}
