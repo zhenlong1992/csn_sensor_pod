@@ -4,13 +4,13 @@ import com.google.common.base.MoreObjects;
 
 public class DataStreamConfig {
 
-	public static String dbName = "CSNPod";
-	public static String streamName = "stream";
-	public static int bufferSize = 1000;
-	public static String serverIP = "117.16.146.55";
-	public static int serverPort = 55555;
-	public static int transferPeriod = 600;
-	public static int maxTransferCntAtOnce = 5;
+	public static String dbName = null;
+	public static String streamName = null;
+	public static int bufferSize = 0;
+	public static String serverIP = null;
+	public static int serverPort = 0;
+	public static int transferPeriod = 0;
+	public static int maxTransferCntAtOnce = 0;
 
 	public static void showDataStreamConfigValue() {
 		System.out.println("DB Name: " + dbName);

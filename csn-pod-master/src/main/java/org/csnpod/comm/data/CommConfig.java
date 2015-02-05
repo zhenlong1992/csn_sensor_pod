@@ -6,9 +6,9 @@ import com.google.common.base.MoreObjects;
 
 public class CommConfig {
 
-	public static ResponseMode respMode = ResponseMode.NUMERIC;
-	public static int statusChkPeriod = 60;
-	public static CommunicationType commType = CommunicationType.CELLULAR;
+	public static ResponseMode respMode = null;
+	public static int statusChkPeriod = 0;
+	public static CommunicationType commType = null;
 
 	public static void showCommConfigValue() {
 		System.out.println("Response Mode: " + respMode.toString());
