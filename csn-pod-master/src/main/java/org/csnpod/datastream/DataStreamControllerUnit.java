@@ -38,8 +38,8 @@ public class DataStreamControllerUnit extends Thread {
 		streamManager.setUpStreamQueue();
 		bufferedQueue = streamManager.getUntransferredDataQueue();
 
-		//socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
-		socket = new SocketConnFactory().getEthernetConnector();
+		socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
+//		socket = new SocketConnFactory().getEthernetConnector();
 		mapper = new ObjectMapper();
 	}
 
