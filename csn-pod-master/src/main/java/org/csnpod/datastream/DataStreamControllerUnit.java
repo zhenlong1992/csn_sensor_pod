@@ -39,8 +39,8 @@ public class DataStreamControllerUnit extends Thread {
 		streamManager.setUpStreamQueue();
 		bufferedQueue = streamManager.getUntransferredDataQueue();
 
-		// socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
-		socket = new SocketConnFactory().getEthernetConnector();
+		socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
+		// socket = new SocketConnFactory().getEthernetConnector();
 		mapper = new ObjectMapper();
 	}
 
@@ -111,7 +111,7 @@ public class DataStreamControllerUnit extends Thread {
 				DataStreamConfig.serverPort);
 
 		Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-		
+
 		// if(ret!=0) change to if(ret!=1)
 		if (ret != 1)
 			ret = socket.connect(DataStreamConfig.serverIP,
