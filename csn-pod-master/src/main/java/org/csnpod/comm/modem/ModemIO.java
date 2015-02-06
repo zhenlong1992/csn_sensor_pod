@@ -95,13 +95,16 @@ public class ModemIO {
 
 				logger.debug("Assembled Response: {}", response);
 				return response;
-			} else if (tempChar == (char) 65535) {
-				logger.warn("Modem doesn't responded correctly");
-				return "";
-			} else if (tempChar == (char) 26) {
-				logger.trace("Remove unnecessary character in Data Send Mode");
-				continue;
-			} else {
+			}
+//			else if (tempChar == (char) 65535) {
+//				logger.warn("Modem doesn't responded correctly");
+//				return "";
+//			} 
+//			else if (tempChar == (char) 26) {
+//				logger.trace("Remove unnecessary character in Data Send Mode");
+//				continue;
+//			} 
+			else {
 				sb.append(tempChar);
 			}
 		}
@@ -125,12 +128,15 @@ public class ModemIO {
 				// tempChar, (int) tempChar);
 				logger.trace("Ready to send data");
 				return '>';
-			} else if (tempChar == (char) 65535) {
-				logger.warn("Modem doesn't responded correctly");
-				return '\0';
-			} else {
+			} 
+//			else if (tempChar == (char) 65535) {
+//				logger.warn("Modem doesn't responded correctly");
+//				return '\0';
+//			} 
+			else {
 				sb.append(tempChar);
 			}
+			
 		}
 	}
 
@@ -145,14 +151,16 @@ public class ModemIO {
 		while (true) {
 			tempChar = serial.read();
 
-			if (tempChar == (char) 65535) {
-				logger.warn("Modem doesn't responded correctly");
-				logger.debug("Waiting Count: {}", count++);
-			} else {
-				// logger.trace("Arrived Character: {}, ASCII Num: {}",
-				// tempChar, (int) tempChar);
-				sb.append(tempChar);
-			}
+//			if (tempChar == (char) 65535) {
+//				logger.warn("Modem doesn't responded correctly");
+//				logger.debug("Waiting Count: {}", count++);
+//			} 
+//			else {
+//				// logger.trace("Arrived Character: {}, ASCII Num: {}",
+//				// tempChar, (int) tempChar);
+//				sb.append(tempChar);
+//			}
+			sb.append(tempChar);
 
 			if (sb.toString().contains("SRING:")) {
 				logger.trace("\"SRING\" Come");

@@ -31,14 +31,15 @@ public class DataStreamControllerUnit extends Thread {
 
 	private boolean abort = false; // Flag in case of abort
 
-	public DataStreamControllerUnit(BlockingQueue<SensorData> queue, SocketAtCmd sockAtCmd) {
+	public DataStreamControllerUnit(BlockingQueue<SensorData> queue,
+			SocketAtCmd sockAtCmd) {
 		super("Data Stream Controller Unit");
 		this.sensorDataQueue = queue;
 		streamManager = new StreamManager();
 		streamManager.setUpStreamQueue();
 		bufferedQueue = streamManager.getUntransferredDataQueue();
 
-		//socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
+		// socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
 		socket = new SocketConnFactory().getEthernetConnector();
 		mapper = new ObjectMapper();
 	}
@@ -92,7 +93,7 @@ public class DataStreamControllerUnit extends Thread {
 	private void sendBufferedSensorData() {
 		int len = bufferedQueue.size() > DataStreamConfig.bufferSize ? DataStreamConfig.bufferSize
 				: bufferedQueue.size();
-		
+
 		List<SensorData> dataList = new LinkedList<SensorData>(
 				bufferedQueue.subList(0, len));
 		bufferedQueue.subList(0, len).clear();
@@ -110,15 +111,16 @@ public class DataStreamControllerUnit extends Thread {
 				DataStreamConfig.serverPort);
 
 		Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-
-		if (ret != 0)
+		
+		// if(ret!=0) change to if(ret!=1)
+		if (ret != 1)
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
 		logger.debug("Socket Connect Return: {}", ret);
 
 		Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
 
-		if (ret != 0)
+		if (ret != 1)
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
 		logger.debug("Socket Connect Return: {}", ret);
