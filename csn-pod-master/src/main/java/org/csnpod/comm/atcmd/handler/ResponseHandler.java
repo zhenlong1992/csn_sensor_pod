@@ -8,12 +8,18 @@ public class ResponseHandler {
 
 	public boolean isRespFin(String resp) {
 		logger.trace("Start isRespFin method");
-		
+
 		logger.trace("Check if the response is the final line or not");
-		//匹配任意的空白符  [0-9]数字
+		// 匹配任意的空白符 [0-9]数字
+		// 아스키 코드로 로그 .
+		for (int i = 0; i < resp.length(); i++) {
+			logger.debug("Respnse final Line CharAscciCode\"{}\" ",
+					(int) resp.charAt(i));
+		}
 		if (resp.matches("\\s*[0-9]\\s*")
 				|| resp.matches("OK|CONNECT|NO CARRIER|ERROR|NO CARRIER0")
-				|| resp.equals("") || resp.contains("+CME ERROR:") || resp.contains("SRING:")) {
+				|| resp.equals("") || resp.contains("+CME ERROR:")
+				|| resp.contains("SRING:")) {
 			logger.debug("Response \"{}\" is the final line", resp);
 			return true;
 		} else {
@@ -24,7 +30,7 @@ public class ResponseHandler {
 
 	public boolean isRespCode(String resp) {
 		logger.trace("Start isRespCode method");
-		
+
 		if (resp.length() < 2 && resp.matches("[0-8]")) {
 			logger.debug("Correct Response Code: {}", resp);
 			return true;
@@ -36,13 +42,13 @@ public class ResponseHandler {
 
 	public int getRespCode(String resp) {
 		logger.trace("Start getRespCode method");
-		
+
 		return Integer.parseInt(resp);
 	}
 
 	public String parseRespCode(int code) {
 		logger.trace("Start parseRespCode method");
-		
+
 		switch (code) {
 		case 0:
 			return "OK";

@@ -127,7 +127,6 @@ public class DataStreamControllerUnit extends Thread {
 					DataStreamConfig.serverPort);
 		}
 		
-		Uninterruptibles.sleepUninterruptibly(7, TimeUnit.SECONDS);
 		socket.write(jsonData);
 		socket.close();
 
