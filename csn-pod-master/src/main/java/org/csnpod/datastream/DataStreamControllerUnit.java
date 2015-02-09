@@ -112,19 +112,22 @@ public class DataStreamControllerUnit extends Thread {
 
 		Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
 
-		// if(ret!=0) change to if(ret!=1)
-		if (ret != 1)
+		if (ret != 0) {
+			socket.close();
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
+		}
 		logger.debug("Socket Connect Return: {}", ret);
 
 		Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
 
-		if (ret != 1)
+		if (ret != 0) {
+			socket.close();
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
-		logger.debug("Socket Connect Return: {}", ret);
-
+		}
+		
+		Uninterruptibles.sleepUninterruptibly(7, TimeUnit.SECONDS);
 		socket.write(jsonData);
 		socket.close();
 
