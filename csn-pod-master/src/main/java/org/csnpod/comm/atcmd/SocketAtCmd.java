@@ -123,7 +123,14 @@ public class SocketAtCmd extends DefaultAtCmd {
 		if (processSendCMD("AT#SSEND=1", data) == '>') {
 			logger.trace("Come Waiting OK MSG");
 			logger.debug("data \"{}\" will be sended", data);
+			// \r\u001A 무슨뜻?
 			List<String> respLines = processCMD(data + "\r\u001A");
+			
+	
+			
+			// logger.debug("respLines: {}",respLines);
+			// logger.debug("GeneralResult(respLines): {}",
+			// getGeneralResult(respLines));
 			return getGeneralResult(respLines);
 		} else
 			return -1;

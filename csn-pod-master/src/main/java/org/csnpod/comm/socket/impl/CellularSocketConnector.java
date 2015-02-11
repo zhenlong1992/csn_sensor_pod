@@ -39,9 +39,11 @@ public class CellularSocketConnector implements SocketConnector {
 		
 		int ret = sockAtCmd.closeSock();
 		
-		if(ret > -1)
+		if(ret > -1){
 			ret = sockAtCmd.freeSock();
-		
+			logger.debug("Free socket connection. ret:{}",ret);
+		}
+		logger.debug("Close socket connection. ret:{}",ret);	
 		logger.trace("End close method");
 		return ret;
 	}

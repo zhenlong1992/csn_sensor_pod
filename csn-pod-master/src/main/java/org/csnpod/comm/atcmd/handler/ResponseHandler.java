@@ -13,7 +13,7 @@ public class ResponseHandler {
 		// 匹配任意的空白符 [0-9]数字
 		// 아스키 코드로 로그 .
 		for (int i = 0; i < resp.length(); i++) {
-			logger.debug("Respnse final Line CharAscciCode\"{}\" ",
+			logger.debug("Response final Line Char_AscciCode\"{}\" ",
 					(int) resp.charAt(i));
 		}
 		if (resp.matches("\\s*[0-9]\\s*")
