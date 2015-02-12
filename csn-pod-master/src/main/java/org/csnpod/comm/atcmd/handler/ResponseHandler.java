@@ -42,7 +42,10 @@ public class ResponseHandler {
 
 	public int getRespCode(String resp) {
 		logger.trace("Start getRespCode method");
-
+		for (int i = 0; i < resp.length(); i++) {
+			logger.debug("getRespCode(String resp) in ResponseHandler Char_AscciCode\"{}\" ",
+					(int) resp.charAt(i));
+		}
 		return Integer.parseInt(resp);
 	}
 

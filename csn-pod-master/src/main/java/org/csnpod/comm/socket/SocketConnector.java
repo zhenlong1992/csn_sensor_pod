@@ -17,5 +17,6 @@ public interface SocketConnector {
 	public int getLocalPort();
 	
 	public int getRemotePort();
+	public void getResponse(int maxCount);
 
 }

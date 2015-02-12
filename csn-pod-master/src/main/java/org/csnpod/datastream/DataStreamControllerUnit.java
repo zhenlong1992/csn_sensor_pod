@@ -109,6 +109,9 @@ public class DataStreamControllerUnit extends Thread {
 
 		int ret = socket.connect(DataStreamConfig.serverIP,
 				DataStreamConfig.serverPort);
+		
+		// getResponse(int MaxCount) parameter is maxCount
+		socket.getResponse(10);
 
 		Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
 
@@ -126,7 +129,7 @@ public class DataStreamControllerUnit extends Thread {
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
 		}
-		
+
 		socket.write(jsonData);
 		socket.close();
 

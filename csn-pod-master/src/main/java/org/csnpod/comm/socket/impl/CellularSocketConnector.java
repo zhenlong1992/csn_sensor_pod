@@ -47,7 +47,14 @@ public class CellularSocketConnector implements SocketConnector {
 		logger.trace("End close method");
 		return ret;
 	}
-
+	
+	@Override
+	public void getResponse(int maxCount){
+		logger.debug("into getResponse, maxCount is: {}",maxCount);
+		String response = sockAtCmd.getResponseFromModem(maxCount);
+		
+		logger.debug("Modem's response is: {}", response);
+	}
 	@Override
 	public String read(int byteNum) {
 		logger.trace("Start read method");

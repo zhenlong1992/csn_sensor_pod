@@ -125,12 +125,10 @@ public class SocketAtCmd extends DefaultAtCmd {
 			logger.debug("data \"{}\" will be sended", data);
 			// \r\u001A 무슨뜻?
 			List<String> respLines = processCMD(data + "\r\u001A");
-			
-	
-			
-			// logger.debug("respLines: {}",respLines);
-			// logger.debug("GeneralResult(respLines): {}",
-			// getGeneralResult(respLines));
+
+			logger.debug("respLines: {}", respLines);
+			logger.debug("GeneralResult(respLines): {}",
+					getGeneralResult(respLines));
 			return getGeneralResult(respLines);
 		} else
 			return -1;
@@ -145,8 +143,10 @@ public class SocketAtCmd extends DefaultAtCmd {
 		logger.trace("Start readData method");
 
 		logger.trace("Waiting For the Data Receive MSG");
+		logger.debug("into the readData!");
 		int ret = io.getSocketRcvResponse();
-		byteNum += 2;
+		logger.debug("ret=io.getsocketRcvResponse in readData: ", ret);
+//		byteNum += 2;
 		if (ret > 0) {
 			logger.debug("AT CMD: AT#SRECV=1," + byteNum);
 			List<String> respLines = processCMD("AT#SRECV=1," + byteNum);
@@ -154,7 +154,7 @@ public class SocketAtCmd extends DefaultAtCmd {
 			int i = 0;
 			for (i = 0; i < respLines.size(); i++) {
 				String resp = respLines.get(i);
-				logger.debug("Temporary response line: \"{}\"", resp);
+				logger.debug("Temporary response line in read Data: \"{}\"", resp);
 				if (resp.contains("#SRECV:")) {
 					logger.trace("Data #SRECV Check!");
 					i++;
@@ -168,5 +168,8 @@ public class SocketAtCmd extends DefaultAtCmd {
 			return null;
 		}
 	}
-
+	public String getResponseFromModem(int maxCount){
+		return io.getResponse(maxCount);
+		
+	}
 }

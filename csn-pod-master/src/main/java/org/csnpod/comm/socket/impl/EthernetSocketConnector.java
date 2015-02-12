@@ -130,5 +130,8 @@ public class EthernetSocketConnector implements SocketConnector {
 	public int getRemotePort() {
 		return remotePort;
 	}
-
+	@Override
+	public void getResponse(int maxCount){
+		
+	}
 }

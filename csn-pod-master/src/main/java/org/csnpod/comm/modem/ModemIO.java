@@ -100,10 +100,10 @@ public class ModemIO {
 //				logger.warn("Modem doesn't responded correctly");
 //				return "";
 //			} 
-//			else if (tempChar == (char) 26) {
-//				logger.trace("Remove unnecessary character in Data Send Mode");
-//				continue;
-//			} 
+			else if (tempChar == (char) 26) {
+				logger.trace("Remove unnecessary character in Data Send Mode");
+				continue;
+			} 
 			else {
 				sb.append(tempChar);
 			}
@@ -139,7 +139,19 @@ public class ModemIO {
 			
 		}
 	}
-
+	public String getResponse(int maxCount){
+		logger.debug("into ModemIO.java getResponse");
+		char tempChar;
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<maxCount;i++){
+			tempChar = serial.read();
+			String loggerTest = "Character: "+tempChar+"   ascciCode:"+(int) tempChar;
+			sb.append("Character: "+tempChar+"   ascciCode:"+(int) tempChar);
+			logger.debug("ModemIO.java getResponse : {}",loggerTest);
+		}
+		return sb.toString();
+		
+	}
 	public int getSocketRcvResponse() {
 		logger.trace("Start getSocketRcvResponse method");
 
@@ -151,15 +163,16 @@ public class ModemIO {
 		while (true) {
 			tempChar = serial.read();
 
-//			if (tempChar == (char) 65535) {
-//				logger.warn("Modem doesn't responded correctly");
-//				logger.debug("Waiting Count: {}", count++);
-//			} 
-//			else {
-//				// logger.trace("Arrived Character: {}, ASCII Num: {}",
-//				// tempChar, (int) tempChar);
-//				sb.append(tempChar);
-//			}
+			if (tempChar == (char) 65535) {
+				logger.warn("Modem doesn't responded correctly");
+				logger.debug("Waiting Count: {}", count++);
+			} 
+			else {
+				// logger.trace("Arrived Character: {}, ASCII Num: {}",
+				// tempChar, (int) tempChar);
+				sb.append(tempChar);
+			}
+			logger.debug("tempChar in getSocketRcvResponse() ModemIO.java   : {}",tempChar);
 			sb.append(tempChar);
 
 			if (sb.toString().contains("SRING:")) {
@@ -174,10 +187,11 @@ public class ModemIO {
 				return 1;
 			}
 
-			if (count > 10) {
+			if (count > 20) {
 				logger.trace("Data Arriving Command \"SRING\" non coming");
 				return 0;
 			}
+//			count++;
 		}
 	}
 }
