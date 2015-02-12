@@ -7,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CellularSocketConnector implements SocketConnector {
-	private Logger logger = LoggerFactory.getLogger(CellularSocketConnector.class);
+	private Logger logger = LoggerFactory
+			.getLogger(CellularSocketConnector.class);
 	private SocketAtCmd sockAtCmd;
 	private String remoteAddr;
 	private String localAddr;
@@ -21,14 +22,14 @@ public class CellularSocketConnector implements SocketConnector {
 	@Override
 	public int connect(String addr, int port) {
 		logger.trace("Start connect method");
-		
+
 		this.remoteAddr = addr;
 		this.remotePort = port;
 		String tempAddr = sockAtCmd.prepareSock();
-		if(tempAddr == null)
+		if (tempAddr == null)
 			return -1;
 		localAddr = tempAddr;
-		
+
 		logger.trace("End connect method");
 		return sockAtCmd.connSock(remoteAddr, remotePort);
 	}
@@ -36,25 +37,24 @@ public class CellularSocketConnector implements SocketConnector {
 	@Override
 	public int close() {
 		logger.trace("Start close method");
-		
+
 		int ret = sockAtCmd.closeSock();
-		
-		if(ret > -1){
+
+		if (ret > -1) {
 			ret = sockAtCmd.freeSock();
-			logger.debug("Free socket connection. ret:{}",ret);
+			logger.debug("Free socket connection. ret:{}", ret);
 		}
-		logger.debug("Close socket connection. ret:{}",ret);	
+		logger.debug("Close socket connection. ret:{}", ret);
 		logger.trace("End close method");
 		return ret;
 	}
-	
+
 	@Override
-	public void getResponse(int maxCount){
-		logger.debug("into getResponse, maxCount is: {}",maxCount);
-		String response = sockAtCmd.getResponseFromModem(maxCount);
-		
-		logger.debug("Modem's response is: {}", response);
+	public void getResponse(int maxCount) {
+		logger.debug("into getResponse, maxCount is: {}", maxCount);
+		sockAtCmd.getResponseFromModem(maxCount);
 	}
+
 	@Override
 	public String read(int byteNum) {
 		logger.trace("Start read method");

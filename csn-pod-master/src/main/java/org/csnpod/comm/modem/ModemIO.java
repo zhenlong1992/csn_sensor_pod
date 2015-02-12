@@ -83,7 +83,7 @@ public class ModemIO {
 
 				logger.trace("Finish to receive the response with \\r");
 				String response = sb.toString();
-				//\D匹配任意非数字的字符  .*匹配任意文本
+				// \D匹配任意非数字的字符 .*匹配任意文本
 				if (response.matches("\\D.*")) {
 					logger.debug("The response line \"{}\" is text data type",
 							response);
@@ -96,15 +96,14 @@ public class ModemIO {
 				logger.debug("Assembled Response: {}", response);
 				return response;
 			}
-//			else if (tempChar == (char) 65535) {
-//				logger.warn("Modem doesn't responded correctly");
-//				return "";
-//			} 
+			// else if (tempChar == (char) 65535) {
+			// logger.warn("Modem doesn't responded correctly");
+			// return "";
+			// }
 			else if (tempChar == (char) 26) {
 				logger.trace("Remove unnecessary character in Data Send Mode");
 				continue;
-			} 
-			else {
+			} else {
 				sb.append(tempChar);
 			}
 		}
@@ -128,30 +127,18 @@ public class ModemIO {
 				// tempChar, (int) tempChar);
 				logger.trace("Ready to send data");
 				return '>';
-			} 
-//			else if (tempChar == (char) 65535) {
-//				logger.warn("Modem doesn't responded correctly");
-//				return '\0';
-//			} 
+			}
+			// else if (tempChar == (char) 65535) {
+			// logger.warn("Modem doesn't responded correctly");
+			// return '\0';
+			// }
 			else {
 				sb.append(tempChar);
 			}
-			
+
 		}
 	}
-	public String getResponse(int maxCount){
-		logger.debug("into ModemIO.java getResponse");
-		char tempChar;
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<maxCount;i++){
-			tempChar = serial.read();
-			String loggerTest = "Character: "+tempChar+"   ascciCode:"+(int) tempChar;
-			sb.append("Character: "+tempChar+"   ascciCode:"+(int) tempChar);
-			logger.debug("ModemIO.java getResponse : {}",loggerTest);
-		}
-		return sb.toString();
-		
-	}
+
 	public int getSocketRcvResponse() {
 		logger.trace("Start getSocketRcvResponse method");
 
@@ -166,13 +153,14 @@ public class ModemIO {
 			if (tempChar == (char) 65535) {
 				logger.warn("Modem doesn't responded correctly");
 				logger.debug("Waiting Count: {}", count++);
-			} 
-			else {
+			} else {
 				// logger.trace("Arrived Character: {}, ASCII Num: {}",
 				// tempChar, (int) tempChar);
 				sb.append(tempChar);
 			}
-			logger.debug("tempChar in getSocketRcvResponse() ModemIO.java   : {}",tempChar);
+			logger.debug(
+					"tempChar in getSocketRcvResponse() ModemIO.java   : {}",
+					tempChar);
 			sb.append(tempChar);
 
 			if (sb.toString().contains("SRING:")) {
@@ -191,7 +179,23 @@ public class ModemIO {
 				logger.trace("Data Arriving Command \"SRING\" non coming");
 				return 0;
 			}
-//			count++;
+			// count++;
 		}
+	}
+
+	public String getResponse(int maxCount) {
+		logger.debug("into ModemIO.java getResponse");
+		char tempChar;
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < maxCount; i++) {
+			tempChar = serial.read();
+			String loggerTest = "Character: " + tempChar + "   ascciCode:"
+					+ (int) tempChar;
+			sb.append("Character: " + tempChar + "   ascciCode:"
+					+ (int) tempChar);
+			logger.debug("ModemIO.java getResponse : {}", loggerTest);
+		}
+		return sb.toString();
+
 	}
 }

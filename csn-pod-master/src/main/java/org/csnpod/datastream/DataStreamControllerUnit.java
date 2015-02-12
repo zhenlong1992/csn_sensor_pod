@@ -107,6 +107,8 @@ public class DataStreamControllerUnit extends Thread {
 		}
 		logger.debug("Translated json data \"{}\"", jsonData);
 
+		socket.getResponse(10);
+		
 		int ret = socket.connect(DataStreamConfig.serverIP,
 				DataStreamConfig.serverPort);
 		
