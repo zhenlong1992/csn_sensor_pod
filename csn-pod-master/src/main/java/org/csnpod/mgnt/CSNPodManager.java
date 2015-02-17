@@ -65,14 +65,18 @@ public class CSNPodManager {
 
 		// cmdRet = commCtrlUnit.getConfAtCmd().rebootModem();
 		// 0은 numeric code 1은 vervose code
-		cmdRet = commCtrlUnit.getConfAtCmd().setResponseMode(0);
-		if (cmdRet != 0)
+		if (CommConfig.respMode.toString().equals("NUMERIC")) {
 			cmdRet = commCtrlUnit.getConfAtCmd().setResponseMode(0);
-
-		logger.debug("Set Response Mode Return: {}", cmdRet);
+			if (cmdRet != 0) {
+				cmdRet = commCtrlUnit.getConfAtCmd().setResponseMode(0);
+			}
+			logger.debug("Set Response Mode Return: {}", cmdRet);
+		}else{
+			logger.warn("Unknown response Mode.");
+		}
 		// if (cmdRet != 0)
 		// return -1;
-		// 0 ： disables command echo    1 ： enables command echo
+		// 0 ： disables command echo 1 ： enables command echo
 		cmdRet = commCtrlUnit.getConfAtCmd().setEchoMode(0);
 		if (cmdRet != 0)
 			cmdRet = commCtrlUnit.getConfAtCmd().setEchoMode(0);
@@ -80,11 +84,11 @@ public class CSNPodManager {
 		logger.debug("Set Echo Mode Return: {}", cmdRet);
 		// if (cmdRet != 0)
 		// return -1;
-		
+
 		/*
-		 * 0 ： disable +CME ERROR:<err> reports, use only ERROR report.
-		 * 1 ： enable +CME ERROR:<err> reports, with <err> in numeric format 
-		 * 2 ： enable +CME ERROR: <err> reports, with <err> in verbose format
+		 * 0 ： disable +CME ERROR:<err> reports, use only ERROR report. 
+		 * 1 : enable +CME ERROR:<err> reports, with <err> in numeric format 
+		 * 2 ：enable +CME ERROR: <err> reports, with <err> in verbose format
 		 */
 		cmdRet = commCtrlUnit.getConfAtCmd().setCMEEMode(1);
 		if (cmdRet != 0)

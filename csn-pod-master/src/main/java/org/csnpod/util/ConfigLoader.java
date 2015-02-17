@@ -132,7 +132,8 @@ public class ConfigLoader {
 			}
 
 			SensorUnitConfig.physicalSnsrInfo = physicalSensorConf;
-			logger.info("Loaded Sensor Config: {}", new SensorUnitConfig().toString());
+			logger.info("Loaded Sensor Config: {}",
+					new SensorUnitConfig().toString());
 		}
 
 		logger.trace("End loadSensorConfig Method");
@@ -155,7 +156,8 @@ public class ConfigLoader {
 		DataStreamConfig.maxTransferCntAtOnce = dataUnitNode.path(
 				"max_transfer_cnt_at_once").intValue();
 
-		logger.info("Loaded DataStream Config: {}", new DataStreamConfig().toString());
+		logger.info("Loaded DataStream Config: {}",
+				new DataStreamConfig().toString());
 
 		logger.trace("End loadDataStreamConfig Method");
 	}
@@ -171,6 +173,8 @@ public class ConfigLoader {
 		} else if (commUnitNode.path("response_mode").textValue()
 				.equals(ResponseMode.VERBOSE.toString())) {
 			CommConfig.respMode = ResponseMode.VERBOSE;
+		} else {
+			logger.warn("CommConfig error. ResponseMode config is wrong. cheking json file");
 		}
 
 		CommConfig.statusChkPeriod = commUnitNode.path("satus_check_period")
@@ -185,9 +189,12 @@ public class ConfigLoader {
 		} else if (commUnitNode.path("comm_type").textValue()
 				.equals(CommunicationType.WIFI.toString())) {
 			CommConfig.commType = CommunicationType.WIFI;
+		}else{
+			logger.warn("CommConfig error. CommunicationType config is wrong. cheking json file");
 		}
 
-		logger.info("Loaded Communication Config: {}", new CommConfig().toString());
+		logger.info("Loaded Communication Config: {}",
+				new CommConfig().toString());
 
 		logger.trace("End loadCommConfig Method");
 	}

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.csnpod.comm.atcmd.SocketAtCmd;
 import org.csnpod.comm.data.CommConfig;
+import org.csnpod.comm.data.ConnectResultType;
 import org.csnpod.comm.socket.SocketConnFactory;
 import org.csnpod.comm.socket.SocketConnector;
 import org.csnpod.datastream.data.DataStreamConfig;
@@ -39,8 +40,13 @@ public class DataStreamControllerUnit extends Thread {
 		streamManager.setUpStreamQueue();
 		bufferedQueue = streamManager.getUntransferredDataQueue();
 
-		socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
-		// socket = new SocketConnFactory().getEthernetConnector();
+		if (CommConfig.commType.toString().equals("CELLULAR")) {
+			socket = new SocketConnFactory().getCellularConnector(sockAtCmd);
+		} else if (CommConfig.commType.toString().equals("ETHERNET")) {
+			socket = new SocketConnFactory().getEthernetConnector();
+		} else {
+			logger.warn("CommunicationType config error in DataStreamControllerUnit");
+		}
 		mapper = new ObjectMapper();
 	}
 
@@ -107,22 +113,20 @@ public class DataStreamControllerUnit extends Thread {
 		}
 		logger.debug("Translated json data \"{}\"", jsonData);
 
-		int ret = socket.connect(DataStreamConfig.serverIP,
+		ConnectResultType ret = socket.connect(DataStreamConfig.serverIP,
 				DataStreamConfig.serverPort);
 
-		Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-
-		if (ret != 0) {
+		if (ret.FAILURE != null) {
 			socket.close();
+			Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
 		}
-		logger.debug("Socket Connect Return: {}", ret);
 
-		Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
-
-		if (ret != 0) {
+		if (ret.FAILURE !=null) {
 			socket.close();
+			logger.debug("Socket Connect Return: {}", ret);
+			Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
 			ret = socket.connect(DataStreamConfig.serverIP,
 					DataStreamConfig.serverPort);
 		}

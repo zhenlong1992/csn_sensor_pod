@@ -50,6 +50,7 @@ public class SensorControllerUnit extends Thread {
 		
 		int i = 0;
 		sensorThreadList = new ArrayList<Sensor>();
+		//only for Arduino. ACM port.
 		List<String> comPorts = new SerialConnFactory().findComPort("ACM");
 		logger.debug("{} ports are found", comPorts.size());
 		logger.debug("Port Data: {} ", comPorts);

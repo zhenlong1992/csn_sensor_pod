@@ -56,7 +56,6 @@ public class Sensor extends Thread {
 			synchronized (this) {
 				if (abort) {
 					logger.info("Close \"{}\"", physicalInfo.getName());
-
 					break;
 				}
 			}

@@ -2,6 +2,7 @@ package org.csnpod.comm.socket.impl;
 
 import org.csnpod.comm.atcmd.SocketAtCmd;
 import org.csnpod.comm.data.CommConfig;
+import org.csnpod.comm.data.ConnectResultType;
 import org.csnpod.comm.socket.SocketConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,18 +20,22 @@ public class CellularSocketConnector implements SocketConnector {
 	}
 
 	@Override
-	public int connect(String addr, int port) {
+	public ConnectResultType connect(String addr, int port) {
 		logger.trace("Start connect method");
 		
 		this.remoteAddr = addr;
 		this.remotePort = port;
 		String tempAddr = sockAtCmd.prepareSock();
 		if(tempAddr == null)
-			return -1;
+			return ConnectResultType.FAILURE;
 		localAddr = tempAddr;
 		
 		logger.trace("End connect method");
-		return sockAtCmd.connSock(remoteAddr, remotePort);
+		if(sockAtCmd.connSock(remoteAddr, remotePort)==0){
+			return ConnectResultType.SUCCESS;
+		}else{
+			return ConnectResultType.FAILURE;
+		}
 	}
 
 	@Override

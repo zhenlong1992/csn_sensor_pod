@@ -1,8 +1,10 @@
 package org.csnpod.comm.socket;
 
+import org.csnpod.comm.data.ConnectResultType;
+
 public interface SocketConnector {
 	
-	public int connect(String addr, int port);
+	public ConnectResultType connect(String addr, int port);
 	
 	public int close();
 	

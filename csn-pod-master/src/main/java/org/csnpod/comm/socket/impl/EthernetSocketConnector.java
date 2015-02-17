@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.csnpod.comm.atcmd.CommStateAtCmd;
+import org.csnpod.comm.data.ConnectResultType;
 import org.csnpod.comm.socket.SocketConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class EthernetSocketConnector implements SocketConnector {
 	private PrintWriter pw;
 
 	@Override
-	public int connect(String addr, int port) {
+	public ConnectResultType connect(String addr, int port) {
 		logger.trace("Start connect method");
 		
 		this.remoteAddr = addr;
@@ -40,16 +41,17 @@ public class EthernetSocketConnector implements SocketConnector {
 		} catch (UnknownHostException e) {
 			logger.error("Can't connect to \"{}\" because of Unknown Host Exception", addr);
 			logger.error("Error: {}", e.toString());
-			return -1;
+			return ConnectResultType.FAILURE;
 		} catch (IOException e) {
 			logger.error("Can't connect to \"{}\" because of IO Expcetion", addr);
 			logger.error("Error: {}", e.toString());
-			return -1;
+			return ConnectResultType.FAILURE;
 		}
 		
 		
 		logger.trace("End connect method");
-		return 1;
+		
+		return ConnectResultType.SUCCESS;
 	}
 
 	@Override
